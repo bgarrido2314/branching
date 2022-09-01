@@ -1,5 +1,6 @@
 name: Branchyng Strategy DEV
 on: 
+  push: dev
   pull_request:
     types: [ assigned, opened, synchronize ]
     branches:

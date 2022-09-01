@@ -1,6 +1,7 @@
-name: Lint Commit Messages
+name: Branchyng Strategy
 on: 
   pull_request:
+    types: [ assigned, opened, synchronize ]
     branches:
       - main
       - preproduccion

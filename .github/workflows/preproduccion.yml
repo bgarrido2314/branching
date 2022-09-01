@@ -41,6 +41,7 @@ jobs:
 
   pullrequest:
     name: Pull Request Test
+    needs: secret
     create-pull-request:
       runs-on: ubuntu-latest
       steps:

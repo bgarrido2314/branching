@@ -1,7 +1,5 @@
 name: Lint Commit Messages
-on:
-  pull_request:
-    branches: [main, preproduccion, test, dev]
+on: pull_request
 
 jobs:
   commitlint:
@@ -12,7 +10,7 @@ jobs:
           fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v5
 
-  build:
+  superlint:
     # Name the Job
     name: Lint Code Base
     # Set the agent to run on
@@ -41,9 +39,9 @@ jobs:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  main:
+  secret:
     runs-on: ubuntu-latest
-    needs: build
+    needs: superlint
     steps:
       - uses: actions/checkout@v2
       - uses: max/secret-scan@master

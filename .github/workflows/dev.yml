@@ -40,17 +40,17 @@ jobs:
       - uses: actions/checkout@v2
       - uses: max/secret-scan@master
 
-    Pull Request Feat:
-      name: Pull Request Feat
-      create-pull-request:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Check out repository code
-            uses: actions/checkout@v2
-          - name: pull-request
-            uses: repo-sync/pull-request@v2
-            with:
-              destination_branch: "test"
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-              pr_label: "Feat, automate PR"
-              pr_title: "Feat"
+  pullrequest:
+    name: Pull Request Feat
+    needs: secret
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "test"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: "Feat, automate PR"
+          pr_title: "Feat"

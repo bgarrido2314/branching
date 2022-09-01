@@ -1,8 +1,5 @@
 name: Lint Commit Messages
 on:
-  push:
-    branches-ignore: [main]
-    # Remove the line above to run when pushing to master
   pull_request:
     branches: [main, preproduccion, test, dev]
 
@@ -10,13 +7,21 @@ jobs:
   commitlint:
     runs-on: ubuntu-latest
     steps:
-      ##########################
-      # Checkout Commits #
-      ##########################
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v5
+
+  build:
+    # Name the Job
+    name: Lint Code Base
+    # Set the agent to run on
+    runs-on: ubuntu-latest
+    needs: commitlint
+    ##################
+    # Load all steps #
+    ##################
+    steps:
       ##########################
       # Checkout the code base #
       ##########################
@@ -25,6 +30,7 @@ jobs:
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
+
       ################################
       # Run Linter against code base #
       ################################
@@ -34,38 +40,10 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #####################
-      # Run search secret #
-      #####################
-      - name: Search secret
+
+  main:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - uses: actions/checkout@v2
       - uses: max/secret-scan@master
-      #####################
-      # Merge Next Branch #
-      #####################
-      - uses: actions/checkout@master
-
-      - name: Merge dev -> test
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: dev
-          target_branch: test
-          github_token: ${{ github.token }}
-
-      - name: Merge test -> preproduccion
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: test
-          target_branch: preproduccion
-          github_token: ${{ github.token }}
-          
-      - name: Merge produccion -> main
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: preproduccion
-          target_branch: main
-          github_token: ${{ github.token }}
-      

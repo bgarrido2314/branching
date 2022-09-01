@@ -3,6 +3,7 @@ on:
   pull_request:
     types: [ assigned, opened, synchronize ]
     branches:
+      - dev/*
       - feat/*
       - fix/*
 

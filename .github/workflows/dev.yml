@@ -43,15 +43,14 @@ jobs:
   pullrequest:
     name: Pull Request Feat
     needs: secret
-    create-pull-request:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out repository code
-          uses: actions/checkout@v2
-        - name: pull-request
-          uses: repo-sync/pull-request@v2
-          with:
-            destination_branch: "test"
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            pr_label: "Feat, automate PR"
-            pr_title: "Feat"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "test"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: "Feat, automate PR"
+          pr_title: "Feat"

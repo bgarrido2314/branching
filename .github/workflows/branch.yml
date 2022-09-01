@@ -1,9 +1,9 @@
-name: Branchyng Strategy
+name: Branchyng Strategy DEV
 on: 
   pull_request:
     types: [ assigned, opened, synchronize ]
     branches:
-      - "**"
+      - test
 
 jobs:
   commitlint:
@@ -38,3 +38,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: max/secret-scan@master
+
+   Pull Request Dev:
+    name: Pull Request Dev
+    on:
+      push:
+        branches:
+          - dev/*
+
+    jobs:
+      create-pull-request:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Check out repository code
+            uses: actions/checkout@v2
+          - name: pull-request
+            uses: repo-sync/pull-request@v2
+            with:
+              destination_branch: "test"
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              pr_label: "Dev, automated pr"
+              pr_title: "Dev"

@@ -11,6 +11,8 @@ env:
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
+    environment:
+      name: dev
     steps:
       - uses: actions/checkout@v3
       - name: Make changes to pull request

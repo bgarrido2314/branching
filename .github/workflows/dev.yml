@@ -46,12 +46,12 @@ jobs:
     needs: secret
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "test"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_label: "Feat, automate PR"
-          pr_title: "Feat"
+      - name: Create Pull Request
+          uses: peter-evans/create-pull-request@v3.10.1
+          with:
+            token: ${{ secrets.GH_TOKEN }}
+            commit-message: Auto Pull Request
+            title: 'Feat: PR to feature'
+            body: Auto-created Pull Request
+            branch: ${{ github.ref }} # The branch where you commit
+            base: dev # Don't forget to specify the right base branch here

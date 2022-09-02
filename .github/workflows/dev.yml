@@ -54,4 +54,4 @@ jobs:
             title: 'Feat: PR to feature'
             body: Auto-created Pull Request
             branch: ${{ github.ref }} # The branch where you commit
-            base: dev # Don't forget to specify the right base branch here
+            base: test # Don't forget to specify the right base branch here

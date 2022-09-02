@@ -13,28 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Make changes to pull request
-        run: date +%s > report.txt
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: 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
-          commit-message: Dev-Test
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: false
-          branch: dev
-          base: test
-          delete-branch: false
-          title: 'Dev-Test'
-          body: |
-            Update report
-            - Testing PR
-            - Testing PR
-          labels: |
-            report
-            automated pr
-          assignees: inieves
-          reviewers: inieves
-          team-reviewers: |
-            owners
-            maintainers
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: 
+          curl --request POST \
+          --url https://github.com/bgarrido2314/branching.git
+          --header "Accept token ${GITHUB-TOKEN}"
+
+          

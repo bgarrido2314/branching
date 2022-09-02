@@ -17,5 +17,5 @@ jobs:
         run:
           curl --request POST \
           --header "Authorization Bearer ${{ secrets.TOKEN }}" \
-          --url https://github.com/bgarrido2314/branching \
+          https://github.com/bgarrido2314/branching \
           -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"dev","base":"test"}'

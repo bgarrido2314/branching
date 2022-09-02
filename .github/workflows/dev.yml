@@ -8,49 +8,35 @@ on:
       - fix/*
 
 jobs:
-  commitlint:
-    name: Lint Commit
+createPullRequest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: wagoid/commitlint-github-action@v5
 
-  superlint:
-    name: Lint Code Base
-    runs-on: ubuntu-latest
-    needs: commitlint
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Make changes to pull request
+        run: date +%s > report.txt
 
-  secret:
-    name: Lint Secret
-    runs-on: ubuntu-latest
-    needs: superlint
-    steps:
-      - uses: actions/checkout@v2
-      - uses: max/secret-scan@master
-
-  pullrequest:
-    name: Pull Request Feat
-    needs: secret
-    runs-on: ubuntu-latest
-    steps:
-      - uses: peter-evans/create-pull-request@v3.10.1
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
-          commit-message: Auto Pull Request
-          title: 'Feat: PR to feature'
-          body: Auto-created Pull Request
-          branch: ${{ github.ref }} # The branch where you commit
-          base: test # Don't forget to specify the right base branch here
+          token: ${{ secrets.PAT }}
+          commit-message: Dev-Test
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: dev
+          base: test
+          delete-branch: false
+          title: 'Dev-Test'
+          body: |
+            Update report
+            - Testing PR
+            - Testing PR
+          labels: |
+            report
+            automated pr
+          assignees: inieves
+          reviewers: inieves
+          team-reviewers: |
+            owners
+            maintainers

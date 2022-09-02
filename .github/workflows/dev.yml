@@ -4,8 +4,6 @@ on:
     types: [ assigned, opened, synchronize ]
     branches:
       - dev
-      - feat/*
-      - fix/*
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
@@ -14,7 +12,5 @@ jobs:
       - name: Make changes to pull request
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          USER: ${{ secrets.USER }}
-          PASS: ${{ secrets.PASS }}
         run: 
-          curl -X POST -u ${GITHUB_TOKEN}:x-oauth-basic -H "Accept:application/vnd.github+json" -H "Authorization:Bearer ${GITHUB_TOKEN}" https://api.github.com/repos/bgarrido2314/branching/pulls -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"dev","base":"test"}'
+          curl -X POST -u ${GITHUB_TOKEN} -H "Accept:application/vnd.github+json" https://api.github.com/repos/bgarrido2314/branching/pulls -d '{"title":"Dev-Test","body":"Please pull these awesome changes in!","head":"dev","base":"test"}'

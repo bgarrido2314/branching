@@ -1,12 +1,11 @@
 name: Branchyng Strategy
-on: 
+on:
   pull_request:
     types: [ assigned, opened, synchronize ]
     branches:
       - dev
       - feat/*
       - fix/*
-
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
@@ -15,8 +14,11 @@ jobs:
       - name: Make changes to pull request
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        run: 
-          curl --request POST \
-          --url https://github.com/bgarrido2314/branching.git
-          --header "Accept token ${GITHUB-TOKEN}"
+        run:
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+          https://github.com/bgarrido2314/branching.git \
+          -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"dev","base":"test"}'
 

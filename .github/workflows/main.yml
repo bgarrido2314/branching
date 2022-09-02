@@ -9,16 +9,30 @@ env:
   GITHUB_TOKEN: ${{ secrets.TOKEN }}
   
 jobs:
-  createPullRequest:
+  createPullRequestDEV:
     runs-on: ubuntu-latest
     environment:
       name: main
     steps:
       - uses: actions/checkout@v3
       - name: Make changes to pull request
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: 
           curl -X POST -u $GITHUB_TOKEN:x-oauth-basic -H "Accept:application/vnd.github+json" https://api.github.com/repos/bgarrido2314/branching/pulls -d '{"title":"Main-Dev","body":"Please pull these awesome changes in!","head":"main","base":"dev"}'
+  createPullRequestTEST:
+    runs-on: ubuntu-latest
+    environment:
+      name: main
+    steps:
+      - uses: actions/checkout@v3
+      - name: Make changes to pull request
+        run:
           curl -X POST -u $GITHUB_TOKEN:x-oauth-basic -H "Accept:application/vnd.github+json" https://api.github.com/repos/bgarrido2314/branching/pulls -d '{"title":"Main-Test","body":"Please pull these awesome changes in!","head":"main","base":"test"}'
+  createPullRequestPREPRODUCCION:
+    runs-on: ubuntu-latest
+    environment:
+      name: main
+    steps:
+      - uses: actions/checkout@v3
+      - name: Make changes to pull request
+        run: 
           curl -X POST -u $GITHUB_TOKEN:x-oauth-basic -H "Accept:application/vnd.github+json" https://api.github.com/repos/bgarrido2314/branching/pulls -d '{"title":"Main-Preproduccion","body":"Please pull these awesome changes in!","head":"main","base":"preproduccion"}'

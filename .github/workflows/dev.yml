@@ -15,7 +15,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run:
-          curl --request POST \
+          curl -X POST \
+          --header "Accept application/vnd.github+json" \
           --header "Authorization Bearer ${{ secrets.TOKEN }}" \
           https://api.github.com/repos/bgarrido2314/branching/pulls \
           -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"dev","base":"test"}'

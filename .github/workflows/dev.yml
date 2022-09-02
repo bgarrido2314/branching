@@ -17,4 +17,4 @@ jobs:
           USER: ${{ secrets.USER }}
           PASS: ${{ secrets.PASS }}
         run: 
-          curl -X POST -u ${USER}:${PASS} -H "Accept:application/vnd.github+json" -H "Authorization:Bearer ${GITHUB_TOKEN}" https://api.github.com/repos/bgarrido2314/branching/pulls -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"dev","base":"test"}'
+          curl -X POST -u ${GITHUB_TOKEN}:x-oauth-basic -H "Accept:application/vnd.github+json" -H "Authorization:Bearer ${GITHUB_TOKEN}" https://api.github.com/repos/bgarrido2314/branching/pulls -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"dev","base":"test"}'
